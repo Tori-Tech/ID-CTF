@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creator Studio - OnlyBlogs</title>
+    <!---Why is it called 'OnlyBlogs'? Because we need a reason for a website such as this to be age gated. Why not make it a blog with adult content? Great idea, now we need a name. Oh yes, I have an idea.-->
+    <link rel="stylesheet" href="static/dashboard.css">
+</head>
+<body class="dashboard-body">
+
+    <nav class="top-nav">
+        <div class="nav-logo">📝 OnlyBlogs <span class="logo-subtext">Creator Studio</span></div>
+        <div class="nav-actions">
+            <span class="account-badge">✨ Premium Creator Account</span>
+            <a href="/" class="nav-link">Return to Portal</a>
+        </div>
+    </nav>
+
+    <main class="dashboard-container">
+        <section class="sidebar-column">
+
+            <div class="card profile-summary-card">
+                <div class="profile-avatar">
+                    {{ user.first_name if user.first_name else 'U' }}
+                </div>
+                <h2 class="profile-username">@{{ user.first_name | lower }}{{ user.last_name | lower }}</h2>
+                <p class="profile-id-ref">Internal Identity Ref: <span class="mono-text">#{{ user.id }}</span></p>
+            </div>
+
+           
+            <div class="card compliance-card">
+                <h3 class="section-title">Safety & Compliance</h3>
+                
+                <div class="verification-status-banner">
+                    <span class="status-icon">✅</span>
+                    <div class="status-text-block">
+                        <p class="status-heading">Age Verified (18+)</p>
+                        <p class="status-description">ID successfully bound to account.</p>
+                    </div>
+                </div>
+
+               
+                <div class="meta-fields-list">
+                    <div class="meta-field-group">
+                        <span class="field-label">Legal Name</span>
+                        <span class="field-value">{{ user.first_name }} {{ user.last_name }}</span>
+                    </div>
+                    <div class="meta-field-group">
+                        <span class="field-label">Date of Birth</span>
+                        <span class="field-value">{{ user.date_of_birth }}</span>
+                    </div>
+                    <div class="meta-field-group">
+                        <span class="field-label">Document Audit Token</span>
+                        <span class="field-value-box font-mono">
+                            {{ user.id_number }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+      
+        <section class="main-column">
+            
+          
+            {% if show_flag %}
+            <div class="flag-alert-box animate-pulse">
+                <div class="flag-header">
+                    <span class="flag-icon">🚩</span>
+                    <div>
+                        <h3 class="flag-heading">SUCCESS!</h3>
+                        <p class="flag-subheading">You have gained access to the Administrator account.</p>
+                    </div>
+                </div>
+                <div class="flag-container">
+                    <code class="flag-code">FLAG{1d0r_vUln3r4b1l1tY!}</code>
+                </div>
+            </div>
+            {% endif %}
+
+          
+            <div class="card content-panel-card">
+                <div class="panel-header">
+                    <h3 class="panel-title">Creator Draft Workspace</h3>
+                    <span class="panel-badge">Draft Auto-Saved</span>
+                </div>
+                
+               
+                <div class="draft-preview-box">
+                    <h4 class="draft-title">Untitled Draft</h4>
+                    <p class="draft-meta">Last updated: 3 minutes ago by Author #{{ user.id }}</p>
+                    <p class="draft-body-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+</html>
