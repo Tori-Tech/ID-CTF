@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Age Verification</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Identity Verification Process</h2>
+        <p>Click the button below to submit your identification details automatically.</p>
+        <button id="bypassBtn" class="submit-btn">Click Here to Verify Your Age with an ID</button>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        document.getElementById('bypassBtn').onclick = async () => {
+            const messageDiv = document.getElementById('message');
+            messageDiv.style.color = "black";
+            messageDiv.innerText = "Processing ID...";
+            const currentUserId = "{{ user_id }}";
+
+           //in case something fails
+            if (!currentUserId || currentUserId === "") {
+                messageDiv.style.color = "red";
+                messageDiv.innerText = "Error: JavaScript could not find the user ID context.";
+                return;
+            }
+
+            try {
+                const response = await fetch('/bypass-age', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: currentUserId }) 
+                });
+                
+                const data = await response.json();
+                if (response.ok) {
+                    messageDiv.style.color = "green";
+                    messageDiv.innerText = data.message;
+                    
+                    
+                    setTimeout(() => {
+                        window.location.href = `/dashboard?id=${currentUserId}`;
+                    }, 2000);
+                } else {
+                    messageDiv.style.color = "red";
+                    messageDiv.innerText = data.message || "An error occurred.";
+                }
+            } catch (error) {
+                messageDiv.style.color = "red";
+                messageDiv.innerText = "Network error during transmission.";
+            }
+        };
+    </script>
+</body>
+</html>
